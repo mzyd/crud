@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import GameCard from './GameCard'
 
-/* const GameList = ({ games }) => */
 const GameList = ({ games }) => {
 
   const emptyMessage = (
@@ -9,8 +9,12 @@ const GameList = ({ games }) => {
   )
 
   const gamesList = (
-    <p>games List</p>
-  );
+
+
+    <div className="ui four cards">
+      { games.map(game => <GameCard game={ game } key={ game._id } />) }
+    </div>
+  )
 
   return (
     <div>
@@ -24,3 +28,12 @@ GameList.propTypes = {
 }
 
 export default GameList
+
+
+/* <div className="ui four cards">
+ * {
+ *   games.map(
+ *     game => <GameCard game={ game } key={ game._id } />
+ *   )
+ * }
+ * </div> */

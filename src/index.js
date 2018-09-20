@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
+import GamesPage from './components/GamesPage.js'
+import GameForm from './components/GameForm.js'
 import registerServiceWorker from './registerServiceWorker';
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
@@ -8,7 +10,6 @@ import rootReducer from './reducers'
 import logger from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
-import GamesPage from './components/GamesPage.js'
 /* import promiseMiddleware from 'redux-promise-middleware' */
 import thunk from 'redux-thunk'
 
@@ -34,6 +35,7 @@ ReactDOM.render(
         </div>
         <Route exact path='/' component={ App } />
         <Route exact path='/games' component={ GamesPage } />
+        <Route path='/games/new' component={ GameForm } />
       </div>
     </Router>
   </Provider>,
