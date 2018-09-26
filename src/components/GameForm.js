@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { connect } from 'react-redux'
-import { saveGame } from '../actions'
-import { Redirect } from 'react-router-dom'
 
 class GameForm extends React.Component {
 
   state = {
-    title: '',
-    cover: '',
+    _id: this.props.game ? this.props.game._id : '',
+    title: this.props.game ? this.props.game.title : '',
+    cover: this.props.game ? this.props.game.cover : '',
     errors: {},
     loading: false,
-    done: false,
+  }
+
+
+  componentWillReceiveProps (nextProps) {
+    this.setState({
+      _id: nextProps.game._id,
+      title: nextProps.game.title,
+      cover: nextProps.game.cover
+    })
   }
 
   handleChange = (e) => {
@@ -40,18 +46,15 @@ class GameForm extends React.Component {
     const isValid = Object.keys(errors).length === 0
 
     if (isValid) {
-      const { title, cover } = this.state
+      const { _id, title, cover } = this.state
       this.setState({ loading: true })
-      this.props.saveGame({ title, cover }).then(
-        () => {
-          this.setState({ done: true })
-        },
+      this.props.saveGame({ _id, title, cover })
+        .catch(
         (err) => err.response
-                    .json()
-                    .then(({ errors }) => {
-                      this.setState({ errors, loading: false })
-                    })
-      )
+          .json()
+          .then(({ errors }) => {
+            this.setState({ errors, loading: false })
+          }))
     }
 
   }
@@ -97,16 +100,11 @@ class GameForm extends React.Component {
     )
     return (
       <div>
-        { this.state.done ? <Redirect to="/games" /> : form }
+        { form }
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    /* abc: state */
-  }
-}
 
-export default connect(null, { saveGame })(GameForm)
+export default GameForm

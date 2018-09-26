@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux'
 import GameList from './GamesList.js'
-import { fetchGames } from '../actions'
+import { connect } from 'react-redux'
+import { fetchGames, deleteGame } from '../actions'
 
 class GamesPage extends Component {
 
@@ -13,9 +13,9 @@ class GamesPage extends Component {
   render() {
     return (
       <div>
-        <GameList games={ this.props.games } />
+        <GameList deleteGame={ this.props.deleteGame } games={ this.props.games } />
       </div>
-    );
+    )
   }
 }
 
@@ -30,4 +30,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, { fetchGames })(GamesPage)
+export default connect(mapStateToProps, { fetchGames, deleteGame })(GamesPage)
